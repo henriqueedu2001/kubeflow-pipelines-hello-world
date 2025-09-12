@@ -52,7 +52,7 @@ Inicie o minikube, especificando quantidades de memória e CPUs suficientes para
 minikube start --memory=4096 --cpus=4
 ```
 
-Caso não existe, crie um namespace `kubeflow` com kubectl
+Caso não exista, crie um namespace `kubeflow` com kubectl
 
 ```bash
 kubectl create namespace kubeflow
