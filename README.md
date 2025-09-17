@@ -95,7 +95,7 @@ kubectl create namespace kubeflow
 Instale o Kubeflow Pipelines do kubeflow via kubectl
 
 ```bash
-kubectl apply -k "github.com/kubeflow/pipelines/manifests/kustomize/cluster-scoped-resources?ref=2.0.0"
+kubectl apply -k "github.com/kubeflow/pipelines/manifests/kustomize/env/platform-agnostic?ref=2.0.0"
 ```
 
 Com isso, o minkube iniciará um cluster com diversos pods do Kubeflow Pipelines. Você deve aguardar até todos os pods alcançarem o estado `running`. Para visualizar os status dos pods, use o comando abaixo.
