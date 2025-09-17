@@ -44,7 +44,41 @@ python3 main.py
 Ao final desse processo, terás como resultado o arquivo `pipeline.yaml`, que é a especificação do pipeline compilado, pronto para ser executado por um backend com Kubeflow.
 
 ## Execução do pipeline
-Você deve ter o minikube e o kubectl instalados em sua máquina local.
+Você deve ter o minikube e o kubectl instalados em sua máquina local. Para instalar o minikube, baixe os binários com curl.
+
+```bash
+curl -LO https://github.com/kubernetes/minikube/releases/latest/download/minikube-linux-amd64
+```
+
+Em seguida, instale-o.
+
+```bash
+sudo install minikube-linux-amd64 /usr/local/bin/minikube && rm minikube-linux-amd64
+```
+
+Podes verificar se a instalação foi bem sucedida com o comando a seguir.
+
+```bash
+minikube version
+```
+
+Em seguida, baixe os binários do kubectl.
+
+```bash
+curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
+```
+
+E instale-os.
+
+```bash
+sudo install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
+```
+
+Podes também verificar se a instalação do kubectl foi bem sucedida com o comando a seguir.
+
+```bash
+kubectl version
+```
 
 Inicie o minikube, especificando quantidades de memória e CPUs suficientes para processar o pipeline.
 
