@@ -110,7 +110,27 @@ O comando mostrará todos os pods do namespace `kubeflow`, conforme a figura aba
     <img src='docs/Screenshot from 2025-09-12 13-38-49.png'></img>
 </p>
 
-Após todos os pods estarem rodando, você deve ter o backend completo do Kubeflow Pipelines rodando localmente eu sua máquina. Agora, faça forwarding de porta, para tornar o frontend da aplicação acessível ao seu navegador.
+Após todos os pods estarem rodando, você deve ter o backend completo do Kubeflow Pipelines rodando localmente eu sua máquina.
+
+Como estamos apenas rodando o Kubeflow Pipelines, não o Kubeflow completo, precisamos instalar o Argo Workflows. Crie um namespace próprio para o Argo.
+
+```bash
+kubectl create namespace argo
+```
+
+Em seguida, instale o Argo no minikube.
+
+```bash
+kubectl apply -n argo -f https://raw.githubusercontent.com/argoproj/argo-workflows/stable/manifests/install.yaml
+```
+
+Verifique se os pods estão rodando.
+
+```bash
+kubectl get pods -n argo
+```
+
+Agora, faça forwarding de porta, para tornar o frontend da aplicação acessível ao seu navegador.
 
 ```bash
 kubectl port-forward -n kubeflow svc/ml-pipeline-ui 8080:80
@@ -153,3 +173,18 @@ Finalmente, a run é criada e executada. Podes visualizar a execução do compon
 </p>
 
 O pipeline e as runs estarão visíveis nas páginas anteriores.
+
+## Acesso remoto
+Acesse o servidor remoto, criando um túnel via SSH.
+
+```bash
+ssh -p2238 -L 8080:localhost:8080 username@ip
+```
+
+Dentro do servidor, faça o port forwarding.
+
+```bash
+kubectl port-forward -n kubeflow svc/ml-pipeline-ui 8080:80
+```
+
+Agora, você poderá acessar a UI pelo link [http://localhost:8080](http://localhost:8080)
