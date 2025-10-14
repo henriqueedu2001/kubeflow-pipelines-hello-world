@@ -11,6 +11,54 @@ def say_hello(name: str) -> str:
     return hello_text
 ```
 
+## Intalação minikube
+Instale o minikube
+
+```bash
+curl -LO https://github.com/kubernetes/minikube/releases/latest/download/minikube-linux-amd64
+sudo install minikube-linux-amd64 /usr/local/bin/minikube && rm minikube-linux-amd64
+```
+
+Inicie o minikube, especificando quantidades de memória e CPUs suficientes para processar o pipeline.
+
+```bash
+minikube start --memory=4096 --cpus=4
+```
+
+Veifique se ele esta rodando mesmo com o seguinte comando
+
+```bash
+minikube status
+```
+
+Ele deve retornar algo como:
+
+```bash
+minikube
+type: Control Plane
+host: Running
+kubelet: Running
+apiserver: Running
+kubeconfig: Configured
+```
+
+## Acessar dashboard minikube 
+Nós queremos acessar a dashboard para termos um controle melhor sobre nossos pods
+
+Verificar se o dashboard esta ativo
+
+```bash
+minikube addons list
+```
+
+Ele retorna uma lista com as funcionalidades do minikube. Tente achar algo relacionado ao **Dashboard**, provavelmente ele não esta habilitado
+
+rode este comando
+```bash
+minikube addons enable dashboard 
+```
+
+
 ## Compilação do Pipeline
 Clone esse repositório
 
