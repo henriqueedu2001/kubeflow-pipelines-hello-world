@@ -116,12 +116,6 @@ python3 -m venv env
 source env/bin/activate
 ```
 
-Em seguida, instale as dependências; no caso, o Kubeflow Pipelines.
-
-```bash
-pip install kfp
-```
-
 Para compilar o pipeline, execute o script `main.py`.
 
 ```bash
@@ -131,103 +125,6 @@ python3 main.py
 Ao final desse processo, terás como resultado o arquivo `pipeline.yaml`, que é a especificação do pipeline compilado, pronto para ser executado por um backend com Kubeflow.
 
 ## Execução do pipeline
-Você deve ter o minikube e o kubectl instalados em sua máquina local. Para instalar o minikube, baixe os binários com curl.
-
-```bash
-curl -LO https://github.com/kubernetes/minikube/releases/latest/download/minikube-linux-amd64
-```
-
-Em seguida, instale-o.
-
-```bash
-sudo install minikube-linux-amd64 /usr/local/bin/minikube && rm minikube-linux-amd64
-```
-
-Podes verificar se a instalação foi bem sucedida com o comando a seguir.
-
-```bash
-minikube version
-```
-
-Em seguida, baixe os binários do kubectl.
-
-```bash
-curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
-```
-
-E instale-os.
-
-```bash
-sudo install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
-```
-
-Podes também verificar se a instalação do kubectl foi bem sucedida com o comando a seguir.
-
-```bash
-kubectl version
-```
-
-Inicie o minikube, especificando quantidades de memória e CPUs suficientes para processar o pipeline.
-
-```bash
-minikube start --memory=4096 --cpus=4
-```
-
-Caso não exista, crie um namespace `kubeflow` com kubectl
-
-```bash
-kubectl create namespace kubeflow
-```
-
-Instale o Kubeflow Pipelines do kubeflow via kubectl
-
-```bash
-kubectl apply -k "github.com/kubeflow/pipelines/manifests/kustomize/env/platform-agnostic?ref=2.0.0"
-```
-
-Com isso, o minkube iniciará um cluster com diversos pods do Kubeflow Pipelines. Você deve aguardar até todos os pods alcançarem o estado `running`. Para visualizar os status dos pods, use o comando abaixo.
-
-```bash
-kubectl get pods -n kubeflow
-```
-
-O comando mostrará todos os pods do namespace `kubeflow`, conforme a figura abaixo.
-
-<p style='text-align: center;'>
-    <img src='docs/Screenshot from 2025-09-12 13-38-49.png'></img>
-</p>
-
-Após todos os pods estarem rodando, você deve ter o backend completo do Kubeflow Pipelines rodando localmente eu sua máquina.
-
-Como estamos apenas rodando o Kubeflow Pipelines, não o Kubeflow completo, precisamos instalar o Argo Workflows. Crie um namespace próprio para o Argo.
-
-```bash
-kubectl create namespace argo
-```
-
-Em seguida, instale o Argo no minikube.
-
-```bash
-kubectl apply -n argo -f https://raw.githubusercontent.com/argoproj/argo-workflows/stable/manifests/install.yaml
-```
-
-Verifique se os pods estão rodando.
-
-```bash
-kubectl get pods -n argo
-```
-
-Agora, faça forwarding de porta, para tornar o frontend da aplicação acessível ao seu navegador.
-
-```bash
-kubectl port-forward -n kubeflow svc/ml-pipeline-ui 8080:80
-```
-
-Acesse o frontend pelo seu navegador, pelo link [http://localhost:8080](http://localhost:8080)
-
-<p style='text-align: center;'>
-    <img src='docs/Screenshot from 2025-09-12 13-56-52.png'></img>
-</p>
 
 Faça o upload do pipeline via botão no canto superior direito. Você será direcionado para uma página em que deves fazer upload do pipeline, especificar metadados e determinar parâmetros relativos a ele.
 
