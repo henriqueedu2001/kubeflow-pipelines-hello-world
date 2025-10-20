@@ -172,3 +172,8 @@ kubectl port-forward -n kubeflow svc/ml-pipeline-ui 8080:80
 ```
 
 Agora, você poderá acessar a UI pelo link [http://localhost:8080](http://localhost:8080)
+
+## Links para ajudar 
+[Como abrir UI do Kubeflow Pipelines](https://youtu.be/6ALDYL-7RJc)
+[Como criar um pipeline](https://youtu.be/5iOQcGfcZe4)
+
