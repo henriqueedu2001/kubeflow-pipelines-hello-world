@@ -53,10 +53,49 @@ minikube addons list
 
 Ele retorna uma lista com as funcionalidades do minikube. Tente achar algo relacionado ao **Dashboard**, provavelmente ele não esta habilitado
 
-rode este comando
+rode este comando para habilitar
 ```bash
 minikube addons enable dashboard 
 ```
+
+agora rode este para acessar
+```bash
+minikube dashboard 
+```
+Vai gerar um link. Entre neste link, ele vai abrir um dashboard na web que você pode controlar seus clusters e namespaces e verificar a saúde dos seus pods.
+
+## Criar namespace kubeflow
+Para criar o namespace precisamos abrir outro terminal e entrar na documentação do KubeFlow. [Kubeflow Documentation](https://www.kubeflow.org/docs/components/pipelines/operator-guides/installation/)
+
+Vamos primeiro copiar e colar está linha no terminal
+```bash
+export PIPELINE_VERSION=2.14.3
+```
+
+depois rodamos estes comandos
+```bash
+kubectl apply -k "github.com/kubeflow/pipelines/manifests/kustomize/cluster-scoped-resources?ref=$PIPELINE_VERSION"
+kubectl wait --for condition=established --timeout=60s crd/applications.app.k8s.io
+kubectl apply -k "github.com/kubeflow/pipelines/manifests/kustomize/env/dev?ref=$PIPELINE_VERSION"
+```
+
+Agora vamos no dashboard criado anteriormente e verificar se apareceu um namespace chamado `kubeflow` </br>
+[imagem]
+
+Espere os pods ficarem TODOS verdes.
+
+## Acessar UI Kubeflow Pipelines
+Para acessar a UI digite o seguinte comando
+
+```bash
+kubectl port-forward -n kubeflow svc/ml-pipeline-ui 8080:80
+```
+
+Acesse o frontend pelo seu navegador, pelo link [http://localhost:8080](http://localhost:8080)
+
+<p style='text-align: center;'>
+    <img src='docs/Screenshot from 2025-09-12 13-56-52.png'></img>
+</p>
 
 
 ## Compilação do Pipeline
